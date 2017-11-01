@@ -6,6 +6,7 @@ class Chatbar extends Component {
   onContent(event) {
     if(event.key == 'Enter'){
       this.props.onNewPost(event.target.value);
+      event.target.value = "";
     }
   }
 
