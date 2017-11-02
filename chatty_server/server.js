@@ -22,7 +22,7 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message) {
     console.log('received message: ', message);
     const parsedMessage = JSON.parse(message);
-    const id = generateId(message.id);
+    const id = generateId();
     const newMessage = {
       id,
       username: parsedMessage.username,

@@ -7,20 +7,26 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: 'Anonymous'},
+      currentUser: {},
       messages: []
     }
     this.onNewPost = this.onNewPost.bind(this);
+    this.onNewUser = this.onNewUser.bind(this);
   }
 
+  //link new message text from chatbar, send to server
   onNewPost(content) {
-    const userId = this.state.messages.length + 1;
     const userName = this.state.currentUser.name;
     // Add a new message to the list of messages in the data store
-    const newMessage = {id: userId, username: userName, content: content};
+    const newMessage = {username: userName, content: content};
     // Update the state of the app component.
     // Calling setState will trigger a call to render() in App and all child components.
     this.socket.send(JSON.stringify(newMessage));
+  }
+
+  //link new username text from chatbar, update currentuser in this.state of App
+  onNewUser(content) {
+    this.state.currentUser = {name: content};
   }
 
   componentDidMount() {
@@ -40,7 +46,7 @@ class App extends Component {
     return (
       <main>
         <Messages messages={this.state.messages} />
-        <Chatbar username={this.state.currentUser.name}
+        <Chatbar username={this.state.currentUser.name} onNewUser={this.onNewUser}
         onNewPost={this.onNewPost} />
       </main>
     );
