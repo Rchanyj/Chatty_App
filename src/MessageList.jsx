@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 
 import Message from './Message.jsx';
 
@@ -9,7 +8,7 @@ class Messages extends Component {
       return <Message
         key={ message.id }
         username={ message.username }
-        content={ message.content } />
+        content={ message.content }/>
     });
 
     return (

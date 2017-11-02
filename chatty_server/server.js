@@ -19,25 +19,61 @@ const wss = new SocketServer({ server });
 //the ws parameter in the cb.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  //broadcast number of clients
+  const userNumber = {type: 'number', content: wss.clients.size};
+  wss.clients.forEach((client) => {
+    if (client.readyState === ws.OPEN) {
+      client.send(JSON.stringify(userNumber));
+    }
+  });
+  //handle data received
   ws.on('message', function incoming(message) {
     console.log('received message: ', message);
     const parsedMessage = JSON.parse(message);
-    const id = generateId();
-    const newMessage = {
-      id,
-      username: parsedMessage.username,
-      content: parsedMessage.content
-    };
-    //broadcast to all:
-    wss.clients.forEach((client) => {
-      if (client.readyState === ws.OPEN) {
-        client.send(JSON.stringify(newMessage));
-      }
-    });
+    switch(parsedMessage.type) {
+      //if postMessage:
+      case 'postMessage':
+        const id = generateId();
+        const newMessage = {
+          type: 'incomingMessage',
+          id,
+          username: parsedMessage.username,
+          content: parsedMessage.content
+        };
+        //broadcast to all:
+        wss.clients.forEach((client) => {
+          if (client.readyState === ws.OPEN) {
+            client.send(JSON.stringify(newMessage));
+          }
+        });
+        break;
+      case 'postNotification':
+        const notification = {
+          type: 'incomingNotification',
+          content: parsedMessage.content
+        };
+        //broadcast to all:
+        wss.clients.forEach((client) => {
+          if (client.readyState === ws.OPEN) {
+            client.send(JSON.stringify(notification));
+          }
+        });
+        break;
+    }
+
   });
 
   //set up cb for when a client closes the socket (usually by closing browser)
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected');
+    //broadcast number of clients
+    const userNumber = {type: 'number', content: wss.clients.size};
+    wss.clients.forEach((client) => {
+      if (client.readyState === ws.OPEN) {
+        client.send(JSON.stringify(userNumber));
+      }
+    });
+  })
 });
 
 
