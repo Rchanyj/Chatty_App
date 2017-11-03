@@ -10,3 +10,7 @@
 
 - ChattyApp allows you to post messages either as Anonymous or a custom username of your choice. If you'd like to use a custom username, please enter it into the username field before sending your message.
 - Happy chatting!
+
+##Screenshots
+
+!['Multiple ChattyApp instances'](https://github.com/Rchanyj/Chatty_App/blob/master/docs/ChattyApp_multiple.png?raw=true)
