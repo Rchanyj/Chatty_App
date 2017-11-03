@@ -4,22 +4,24 @@ class Chatbar extends Component {
 
   //When username and message is submitted:
   onContent(event) {
-    if(event.key == 'Enter'){
+    if(event.key == 'Enter' && event.target.value.length !== 0){
       this.props.onNewPost(event.target.value);
       event.target.value = '';
-    }
+    };
   }
 
   //sends changed username to App to display
   //if enter:
   updateUserEnter(event) {
-    if(event.key == 'Enter'){
+    if(event.key == 'Enter' && event.target.value.length !==0){
       this.props.onNewUser(event.target.value);
-    }
+    };
   }
   //if blur:
   updateUserBlur(event) {
-    this.props.onNewUser(event.target.value);
+    if(event.target.value.length !== 0) {
+      this.props.onNewUser(event.target.value);
+    };
   }
 
   render () {

@@ -10,7 +10,6 @@ class App extends Component {
     this.state = {
       currentUser: {name: 'Anonymous'},
       userNumber: 0,
-      notifyUserChange: '',
       messages: []
     }
     this.onNewPost = this.onNewPost.bind(this);
@@ -59,13 +58,14 @@ class App extends Component {
           break;
         //if username change notification:
         case 'incomingNotification':
-          const notification = data.content;
-          this.setState({notifyUserChange: notification});
+          const notification = {type: data.type, notice: data.content}
+          this.setState({messages: this.state.messages.concat(notification)});
           break;
         //number of users
         case 'number':
           const userNumber = data.content;
           this.setState({userNumber: userNumber});
+          break;
       };
     });
   }
@@ -74,10 +74,9 @@ class App extends Component {
     return (
       <main>
         <aside className='currentUsers'>{this.state.userNumber} user(s) online</aside>
-        <Messages messages={this.state.messages} notification={this.state.notifyUserChange}/>
+        <Messages messages={this.state.messages} />
         <Chatbar username={this.state.currentUser.name} onNewUser={this.onNewUser}
         onNewPost={this.onNewPost} />
-        <MessageSystem notification={this.state.notifyUserChange} />
       </main>
     );
   }
