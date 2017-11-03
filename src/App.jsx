@@ -53,12 +53,12 @@ class App extends Component {
       switch(data.type) {
         //if new message:
         case 'incomingMessage':
-          const newMessage = {type: data.type, id: data.id, username: data.username, content: data.content}
+          const newMessage = {type: data.type, id: data.id, username: data.username, content: data.content};
           this.setState({messages: this.state.messages.concat(newMessage)});
           break;
         //if username change notification:
         case 'incomingNotification':
-          const notification = {type: data.type, notice: data.content}
+          const notification = {type: data.type, notice: data.content};
           this.setState({messages: this.state.messages.concat(notification)});
           break;
         //number of users

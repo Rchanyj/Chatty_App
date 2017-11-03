@@ -90,8 +90,8 @@
   .currentUsers {
     z-index: 3;
     float: right;
-    position: relative;
+    position: fixed;
     right: 25px;
-    bottom: 45px;
+    top: 20px;
   }
 
