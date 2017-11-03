@@ -59,7 +59,7 @@ wss.on('connection', (ws) => {
           }
         });
         break;
-    }
+    };
 
   });
 
@@ -71,7 +71,7 @@ wss.on('connection', (ws) => {
     wss.clients.forEach((client) => {
       if (client.readyState === ws.OPEN) {
         client.send(JSON.stringify(userNumber));
-      }
+      };
     });
   })
 });
